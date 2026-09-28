@@ -1,0 +1,30 @@
+# SQLiteデータベース（実行時に自動生成・自動マイグレーションされる）
+data/*.db
+data/*.db-journal
+data/*.db-wal
+data/*.db-shm
+
+# ビルド成果物
+/shiori
+/main
+/dist/
+/bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# go test -c のテストバイナリ
+*.test
+
+# カバレッジプロファイル等
+*.out
+coverage.html
+
+# mise のローカル上書き（共有の mise.toml はコミット対象）
+.mise.local.toml
+
+# OS・一時ファイル
+.DS_Store
+*~

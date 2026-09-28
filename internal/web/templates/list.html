@@ -1,0 +1,40 @@
+{{define "list"}}<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shiori</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<main class="container">
+{{template "header" .}}
+<h1>Bookmarks{{if .FavOnly}} ★{{end}}</h1>
+<p class="filters"><a href="/?fav=1">★ Favorites</a> <a href="/tags">Tags</a></p>
+<form method="get" action="/" class="search">
+  <input type="search" name="q" value="{{.Query}}" placeholder="Search" class="search-query">
+  <input name="tag" value="{{.Tag}}" placeholder="Tag" class="search-tag">
+  <button type="submit" class="btn btn-primary">Search</button>
+  {{if or .Query .Tag .FavOnly}}<a href="/" class="clear">Clear</a>{{end}}
+</form>
+{{if .Bookmarks}}
+<ul class="cards">
+  {{range .Bookmarks}}
+  <li class="card">
+    <a href="/bookmarks/{{.ID}}" class="card-title">{{if .Favorite}}★ {{end}}{{if .Title}}{{.Title}}{{else}}{{.URL}}{{end}}</a>
+    <div class="card-meta"><a href="{{.URL}}">{{.URL}}</a>{{if .Tags}} <span>{{range $i, $t := .Tags}}{{if $i}} {{end}}<a href="/?tag={{$t}}" class="pill">#{{$t}}</a>{{end}}</span>{{end}}</div>
+    {{if .Comment}}<p class="card-comment">{{.Comment}}</p>{{end}}
+  </li>
+  {{end}}
+</ul>
+<p class="pager">
+  {{if .HasPrev}}<a href="/?q={{.Query}}&amp;tag={{.Tag}}{{if .FavOnly}}&amp;fav=1{{end}}&amp;limit={{.Limit}}&amp;offset={{.PrevOffset}}">← Newer</a>{{end}}
+  {{if .HasNext}}<a href="/?q={{.Query}}&amp;tag={{.Tag}}{{if .FavOnly}}&amp;fav=1{{end}}&amp;limit={{.Limit}}&amp;offset={{.NextOffset}}">Older →</a>{{end}}
+</p>
+{{else}}
+<p class="empty">No bookmarks found.</p>
+{{end}}
+{{template "footer" .}}
+</main>
+</body>
+</html>{{end}}

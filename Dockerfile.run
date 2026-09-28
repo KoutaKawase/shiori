@@ -1,0 +1,26 @@
+# Shiori 実行用軽量イメージ。
+#
+# 開発用コンテナの Dockerfile とは別物。こちらはバイナリ実行専用。
+# 既存の Dockerfile には触らないこと。
+#
+# ビルド:
+#   docker build -f Dockerfile.run -t shiori .
+#
+# modernc.org/sqlite（ピュアGo）のため CGO 不要。
+# 静的バイナリ化して scratch で動かす。
+
+FROM golang:1.27 AS build
+WORKDIR /src
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . .
+RUN CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o /out/shiori ./cmd/shiori
+
+FROM scratch
+COPY --from=build /out/shiori /shiori
+WORKDIR /app
+VOLUME /app/data
+EXPOSE 8080
+# 非root実行。bind mount で権限問題が出たら --user $(id -u):$(id -g) を付ける。
+USER 65532:65532
+ENTRYPOINT ["/shiori"]

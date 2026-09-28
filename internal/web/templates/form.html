@@ -1,0 +1,24 @@
+{{define "form"}}<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{if .IsNew}}New bookmark{{else}}Edit bookmark{{end}} — Shiori</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<main class="container">
+{{template "header" .}}
+<h1>{{if .IsNew}}New bookmark{{else}}Edit bookmark{{end}}</h1>
+{{if .Error}}<p class="error">{{.Error}}</p>{{end}}
+<form method="post" action="{{.Action}}" class="card form">
+  <label class="field"><span>URL</span><input name="url" value="{{.URL}}" required></label>
+  <label class="field"><span>Title</span><input name="title" value="{{.Title}}"></label>
+  <label class="field"><span>Comment</span><textarea name="comment" rows="4">{{.Comment}}</textarea></label>
+  {{if .IsNew}}<label class="field"><span>Tags (comma or space separated)</span><input name="tags" value="{{.Tags}}"></label>{{end}}
+  <button type="submit" class="btn btn-primary">{{if .IsNew}}Add{{else}}Save{{end}}</button>
+</form>
+{{template "footer" .}}
+</main>
+</body>
+</html>{{end}}

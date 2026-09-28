@@ -1,0 +1,54 @@
+{{define "show"}}<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{if .Bookmark.Title}}{{.Bookmark.Title}}{{else}}Bookmark {{.Bookmark.ID}}{{end}} — Shiori</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<main class="container">
+{{template "header" .}}
+{{if .Error}}<p class="error">{{.Error}}</p>{{end}}
+<div class="card">
+  <h1 class="card-heading">{{if .Bookmark.Favorite}}★ {{end}}{{if .Bookmark.Title}}{{.Bookmark.Title}}{{else}}Bookmark {{.Bookmark.ID}}{{end}}</h1>
+  <dl class="detail">
+    <div><dt>URL</dt><dd class="break"><a href="{{.Bookmark.URL}}">{{.Bookmark.URL}}</a></dd></div>
+    {{if .Bookmark.Comment}}<div><dt>Comment</dt><dd>{{.Bookmark.Comment}}</dd></div>{{end}}
+    <div><dt>Tags</dt><dd>{{if .Bookmark.Tags}}{{range $i, $t := .Bookmark.Tags}}{{if $i}} {{end}}<a href="/?tag={{$t}}" class="pill">#{{$t}}</a>{{end}}{{else}}<span class="muted">—</span>{{end}}</dd></div>
+    <div class="detail-dates"><div><dt>Created</dt><dd>{{.Bookmark.CreatedAt}}</dd></div><div><dt>Updated</dt><dd>{{.Bookmark.UpdatedAt}}</dd></div></div>
+  </dl>
+  <div class="actions">
+    <a href="/bookmarks/{{.Bookmark.ID}}/edit" class="btn btn-secondary btn-sm">Edit</a>
+    {{if .Bookmark.Favorite}}
+    <form method="post" action="/bookmarks/{{.Bookmark.ID}}/unfavorite">
+      <button type="submit" class="btn btn-secondary btn-sm">★ Unfavorite</button>
+    </form>
+    {{else}}
+    <form method="post" action="/bookmarks/{{.Bookmark.ID}}/favorite">
+      <button type="submit" class="btn btn-secondary btn-sm">☆ Favorite</button>
+    </form>
+    {{end}}
+    <form method="post" action="/bookmarks/{{.Bookmark.ID}}/delete">
+      <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+    </form>
+  </div>
+</div>
+<div class="card">
+  <h2>Tags</h2>
+  <form method="post" action="/bookmarks/{{.Bookmark.ID}}/tags" class="row">
+    <input name="tag" placeholder="new tag" class="grow">
+    <button type="submit" class="btn btn-primary btn-sm">Add tag</button>
+  </form>
+  {{if .Bookmark.Tags}}
+  <ul class="taglist">
+    {{range .Bookmark.Tags}}
+    <li><span class="pill">#{{.}}</span> <form class="inline" method="post" action="/bookmarks/{{$.Bookmark.ID}}/tags/remove"><input type="hidden" name="tag" value="{{.}}"><button type="submit" class="link-danger">Remove</button></form></li>
+    {{end}}
+  </ul>
+  {{end}}
+</div>
+{{template "footer" .}}
+</main>
+</body>
+</html>{{end}}

@@ -1,0 +1,362 @@
+/* Shiori plain CSS. Dark-first calm theme. No frameworks, no JavaScript, no CDN. */
+
+:root {
+  color-scheme: dark;
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --surface-hover: #273449;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --border: #334155;
+  --input-border: #475569;
+  --link: #93c5fd;
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --secondary: #475569;
+  --secondary-hover: #54677f;
+  --radius: 0.5rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 0 1rem 2rem;
+}
+
+h1 {
+  font-size: 1.5rem;
+  margin: 0 0 1rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.125rem;
+  margin: 0 0 0.75rem;
+}
+
+a {
+  color: var(--link);
+}
+
+/* Navigation */
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.footer {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+}
+
+/* Cards */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.3);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.cards {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cards .card {
+  margin-bottom: 0.75rem;
+}
+
+.card-heading {
+  margin-top: 0;
+}
+
+.card-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.card-meta {
+  font-size: 0.875rem;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.card-comment {
+  margin: 0.5rem 0 0;
+  color: var(--text);
+  white-space: pre-wrap;
+}
+
+.empty {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* Tags */
+
+.pill {
+  display: inline-block;
+  background: var(--border);
+  border-radius: 9999px;
+  padding: 0.1rem 0.6rem;
+  font-size: 0.75rem;
+  color: var(--text);
+  text-decoration: none;
+}
+
+a.pill:hover {
+  background: var(--input-border);
+}
+
+.taglist {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0;
+}
+
+.taglist li {
+  margin-bottom: 0.5rem;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* Detail list */
+
+.detail {
+  margin: 0;
+}
+
+.detail > div {
+  margin-bottom: 0.5rem;
+}
+
+.detail dt {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.detail dd {
+  margin: 0 0 0.25rem;
+  overflow-wrap: anywhere;
+}
+
+.detail-dates {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.detail-dates .detail-dates {
+  display: block;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.actions form {
+  margin: 0;
+}
+
+/* Forms */
+
+.form {
+  display: grid;
+  gap: 1rem;
+}
+
+.field {
+  display: block;
+}
+
+.field > span {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+}
+
+input[name="url"],
+input[name="title"],
+input[name="tag"],
+input[name="q"],
+input[type="search"],
+textarea {
+  width: 100%;
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.75rem;
+  font: inherit;
+  color: var(--text);
+  background: var(--bg);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+.search {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.search-query {
+  flex: 1;
+  min-width: 10rem;
+}
+
+.search-tag {
+  width: 8rem;
+}
+
+.clear {
+  align-self: center;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.grow {
+  flex: 1;
+}
+
+.inline {
+  display: inline;
+}
+
+form.inline {
+  margin: 0;
+}
+
+/* Buttons */
+
+.btn {
+  display: inline-block;
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.5rem 1rem;
+  font: inherit;
+  font-weight: 500;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-sm {
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+}
+
+.btn-primary {
+  background: var(--primary);
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+.btn-secondary {
+  background: var(--secondary);
+}
+
+.btn-secondary:hover {
+  background: var(--secondary-hover);
+}
+
+.btn-danger {
+  background: var(--danger);
+}
+
+.btn-danger:hover {
+  background: var(--danger-hover);
+}
+
+.link-danger {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.link-danger:hover {
+  color: var(--danger);
+}
+
+/* Misc */
+
+.filters {
+  margin: 0 0 1rem;
+}
+
+.filters a {
+  margin-right: 0.75rem;
+}
+
+.error {
+  background: #450a0a;
+  border: 1px solid #b91c1c;
+  color: #fca5a5;
+  border-radius: var(--radius);
+  padding: 0.75rem;
+  margin: 0 0 1rem;
+}
+
+.pager {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
