@@ -38,7 +38,7 @@ func Open(path string) (*sql.DB, error) {
 	for _, p := range pragmas {
 		if _, err := sqlDB.Exec(p); err != nil {
 			_ = sqlDB.Close()
-			return nil, fmt.Errorf("pragma %q: %w", p, err)
+			return nil, fmt.Errorf("pragma %q (db=%q): %w", p, path, err)
 		}
 	}
 	if err := sqlDB.Ping(); err != nil {

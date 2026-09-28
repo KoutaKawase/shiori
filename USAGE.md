@@ -119,4 +119,5 @@ docker run -d --name shiori \
 
 * コンテナ内では `0.0.0.0` で待ち受ける必要があります（`SHIORI_ADDR` または `--addr 0.0.0.0:8080`）。ホスト側への公開範囲は `-p 127.0.0.1:8080:8080` のように絞れます。
 * bind mount を使う場合は非root実行（UID 65532）のため権限に注意してください。書き込めない場合は `--user $(id -u):$(id -g)` を付けて実行します。
+* `pragma "PRAGMA journal_mode=WAL;": unable to open database file (14)` が出る場合は `/app/data` に書き込めていません。名前付きボリュームを古いイメージで作ったままの場合は、バックアップ後に `docker volume rm shiori-data` で作り直すと直ることがあります（初回作成時の所有権が引き継がれるため）。応急処置として `docker run --rm --user root -v shiori-data:/data alpine chown -R 65532:65532 /data` で所有権を直す方法もあります。
 * バックアップは `docker stop shiori` 後に `docker cp shiori:/app/data/bookmarks.db ./` などで取り出せます。

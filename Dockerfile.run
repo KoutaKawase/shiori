@@ -14,10 +14,16 @@ WORKDIR /src
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
-RUN CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o /out/shiori ./cmd/shiori
+RUN CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o /out/shiori ./cmd/shiori \
+ && mkdir -p /out/data && chmod 755 /out/data
 
 FROM scratch
 COPY --from=build /out/shiori /shiori
+# /app/data をあらかじめイメージ内に用意し、UID 65532 所有にしておく。
+# 新規の名前付きボリュームは初回マウント時にイメージ側の内容・所有権を引き継ぐため、
+# これがないとボリュームが root 所有で作られ、非root実行時に
+# `pragma "PRAGMA journal_mode=WAL;": unable to open database file (14)` になる。
+COPY --from=build --chown=65532:65532 /out/data /app/data
 WORKDIR /app
 VOLUME /app/data
 EXPOSE 8080
